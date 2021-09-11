@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
@@ -12,41 +12,51 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import { Button } from '@material-ui/core';
+import api from '../../../services/api'
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-  },
-  title: {
-    flexGrow: 1,
-  },
+  root: {display: 'flex',},
+  title: {flexGrow: 1,},
   appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    height: '100vh',
-    overflow: 'auto',
-  },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
-  },
-  paper: {
-    padding: 25,
-    display: 'flex',
-    overflow: 'auto',
-    flexDirection: 'column',
-  },
-  formControl: {
-    width: '100%',
-  },
+  content: {flexGrow: 1,height: '100vh',overflow: 'auto',},
+  container: {paddingTop: theme.spacing(4),paddingBottom: theme.spacing(4),},
+  paper: {padding: 25,display: 'flex',overflow: 'auto',flexDirection: 'column',},
+  formControl: {width: '100%',},
 }));
 
 export default function UsuarioCadastrar() {
   const classes = useStyles();
 
+  const [nome, setNome] = useState('');
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+  const [tipo, setTipo] = useState('');
+
+  async function handleSubmit(){
+
+    const data = {
+      nome_usuario:nome, 
+      email_usuario:email, 
+      senha_usuario:senha, 
+      tipo_usuario:tipo}
+      
+      if(nome!==''&&email!==''&&senha!==''&&tipo!==''){
+        
+        const response = await api.post('/api/usuarios', data);
+
+        if(response.status===200){
+          window.location.href='/admin/usuarios' 
+        }else{
+          alert ('Erro ao cadastrar o usuário!');
+        }
+      }else{
+        alert('Por favor, preencha todos os dados!');
+      }
+  }
+
   return (
     <div className={classes.root}>
-      
       <MenuAdmin/>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
@@ -64,6 +74,8 @@ export default function UsuarioCadastrar() {
                     label="Nome Completo"
                     fullWidth
                     autoComplete="nome"
+                    value={nome}
+                    onChange={e => setNome(e.target.value)}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -74,6 +86,8 @@ export default function UsuarioCadastrar() {
                     label="Email"
                     fullWidth
                     autoComplete="email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
                   />
                   </Grid>
                   <Grid item xs={12} sm={3}>
@@ -82,8 +96,8 @@ export default function UsuarioCadastrar() {
                       <Select
                         labelId="labelTipo"
                         id="tipo"
-                        //value={age}
-                        //onChange={handleChange}
+                        value={tipo}
+                        onChange={e => setTipo(e.target.value)}
                       >
                         <MenuItem value={1}>Administrador</MenuItem>
                         <MenuItem value={2}>Funcionário</MenuItem>
@@ -99,7 +113,14 @@ export default function UsuarioCadastrar() {
                     label="Senha"
                     fullWidth
                     autoComplete="senha"
+                    value={senha}
+                    onChange={e => setSenha(e.target.value)}
                   />
+                </Grid>
+                <Grid item xs={12} sm={12}>
+                  <Button variant="contained" onClick={handleSubmit} color="primary">
+                    Salvar
+                  </Button>
                 </Grid>
                 </Grid>
               </Paper>
