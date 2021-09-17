@@ -18,6 +18,16 @@ DataSchema.pre('save', function(next){
     next();
 });
 
+DataSchema.methods.isCorrectPassword = function (password, callback ){
+    bcrypt.compare(password,this.senha_usuario,function(err,same){
+        if(err){
+            callback(err);
+        }else{
+            callback(err, same);
+        }
+    })
+}
+
 DataSchema.pre('findOneAndUpdate', function(next){
     var password = this.getUpdate().senha_usuario+'';
     if(password.length<55){

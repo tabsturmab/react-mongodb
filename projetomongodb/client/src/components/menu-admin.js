@@ -1,14 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
-
 import Typography from '@material-ui/core/Typography';
 import CssBaseline from '@material-ui/core/CssBaseline';
-
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
-
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import AppBar from '@material-ui/core/AppBar';
@@ -16,6 +13,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 
 import { mainListItems, secondaryListItems } from './list-menu-admin';
+import { getNomeUsuario } from '../services/auth';
 
 const drawerWidth = 240;
 
@@ -83,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
 export default function MenuAdmin(title){
     const classes = useStyles();
 
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = useState(true);
     const handleDrawerOpen = () => {
       setOpen(true);
     };
@@ -91,7 +89,7 @@ export default function MenuAdmin(title){
       setOpen(false);
     };
     return (
-        <>
+        <div>
         <CssBaseline />
         <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
@@ -102,7 +100,7 @@ export default function MenuAdmin(title){
             onClick={handleDrawerOpen}
             className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
           >
-            <MenuIcon />
+            <MenuIcon/>
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Dashboard
@@ -126,6 +124,6 @@ export default function MenuAdmin(title){
         <Divider />
         <List>{secondaryListItems}</List>
       </Drawer>
-      </>
+      </div>
     )
 }
