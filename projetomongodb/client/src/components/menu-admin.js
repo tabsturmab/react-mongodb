@@ -13,7 +13,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 
 import { mainListItems, secondaryListItems } from './list-menu-admin';
-import { getNomeUsuario } from '../services/auth';
+//import { getNomeUsuario } from '../services/auth';
 
 const drawerWidth = 240;
 

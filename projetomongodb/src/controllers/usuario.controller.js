@@ -45,7 +45,7 @@ module.exports = {
                 console.log(err);
                 res.status(200).json({erro: "Erro no servidor. Por favor, tente novamente"});
             }else if (!user){
-                res.status(200).json({status:2, error: 'Email não encontrado!'});
+                res.status(200).json({status:2, error: 'Email não encontrado no banco de dados!'});
             }else{
                 user.isCorrectPassword(senha, async function(err, same){
                     if(err){
