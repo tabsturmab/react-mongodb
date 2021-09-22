@@ -11,15 +11,16 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-
 import { mainListItems, secondaryListItems } from './list-menu-admin';
-//import { getNomeUsuario } from '../services/auth';
+import { getNomeUsuario } from '../services/auth';
+import LogoNetparts from '../assets/img/logonetpartspequeno.png';
+
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
-    paddingRight: 24, // keep right padding when drawer closed
+    paddingRight: 24,
   },
   toolbarIcon: {
     display: 'flex',
@@ -103,7 +104,7 @@ export default function MenuAdmin(title){
             <MenuIcon/>
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard
+            {getNomeUsuario()}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -115,6 +116,7 @@ export default function MenuAdmin(title){
         open={open}
       >
         <div className={classes.toolbarIcon}>
+          <img style={{width:160, height:50}} src={LogoNetparts} alt="Logo Netparts"/>
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>

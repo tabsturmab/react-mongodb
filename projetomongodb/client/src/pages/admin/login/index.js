@@ -107,10 +107,6 @@ export default function SignIn() {
               value={senha}
               onChange={e => setSenha(e.target.value)}
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary"/>}
-              label="Remember me"
-            />
             <Button
               fullWidth
               variant="contained"
