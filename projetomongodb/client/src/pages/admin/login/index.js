@@ -75,8 +75,10 @@ export default function SignIn() {
         }else if(res.data.status===2){
           alert('Atenção: '+res.data.error);
         } 
+        setLoading(false);
         }else{
-          alert('Erro no servidor!');
+          alert('Erro no servidor');
+          setLoading(false);
         }
       })
   }  

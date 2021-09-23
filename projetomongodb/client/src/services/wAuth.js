@@ -21,15 +21,15 @@ export default function WAuth ({ component: Component, ...rest }){
                 setRedirect(true);
             }
         }
-        // setTimeout(() => verify(),1000);
-        verify();
+        setTimeout(() => verify(),1000);
+        //verify();
     },[])
 
     return(
-        loading?<LinearProgress style={{width:'50%', margin:'80px auto'}}  />:<Route { ...rest}
+        loading?<LinearProgress style={{width:'50%', margin:'80px auto'}}/>:<Route { ...rest}
         render={props => !redirect?(
-            <Component {...props } />
-        ):<Redirect to={{pathname: "/admin/login",state:{ from: props.location}}} />
+            <Component {...props }/>
+        ):<Redirect to={{pathname: "/admin/login",state:{ from: props.location}}}/>
         } />
     )
 }

@@ -15,9 +15,12 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import api from '../../../services/api';
 import Button from '@material-ui/core/Button';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Chip from '@material-ui/core/Chip';
-import {getNomeTipo, getNomeTipoLabel} from '../../../functions/static_data'
+import {getNomeTipo, getNomeTipoLabel} from '../../../functions/static_data';
+import AutorenewIcon from '@material-ui/icons/Autorenew';
+import ClearIcon from '@material-ui/icons/Clear';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,12 +51,14 @@ export default function UsuariosListagem() {
   const classes = useStyles();
 
   const [usuarios, setUsuarios] = useState([]);
+  const [ loading, setLoading ] = useState(true);
 
   useEffect(() => {
 
     async function loadUsuarios(){
       const response = await api.get("/api/usuarios");
       setUsuarios(response.data)
+      setLoading(false);
     }
     loadUsuarios();
   },[]);
@@ -82,36 +87,37 @@ export default function UsuariosListagem() {
               <Grid container spacing={3}>
                 <Grid item xs={12} sm={12}>
                 <TableContainer component={Paper}>
-      <Table className={classes.table} size="small" aria-label="a dense table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Nome</TableCell>
-            <TableCell align="center">Email</TableCell>
-            <TableCell align="center">Tipo</TableCell>
-            <TableCell align="center">Data de Cadastro</TableCell>
-            <TableCell align="right">Opções</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {usuarios.map((row) => (
-            <TableRow key={row._id}>
-              <TableCell component="th" scope="row">
-                {row.nome_usuario}
-              </TableCell>
-              <TableCell align="center">{row.email_usuario}</TableCell>
-              <TableCell align="center"><Chip label={getNomeTipo(row.tipo_usuario)} color={getNomeTipoLabel(row.tipo_usuario)}/></TableCell>
-              <TableCell align="center">{new Date(row.createdAt).toLocaleString('pt-br')}</TableCell>
-              <TableCell align="right">
-                <ButtonGroup aria-label="outlined secondary button group">
-                  <Button color="primary" href={'/admin/usuarios/editar/' + row._id}>Atualizar</Button>
-                  <Button color="secondary" onClick={() => handleDelete(row._id)}>Excluir</Button>
-                </ButtonGroup>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+                {loading?(<LinearProgress style={{width:'50%', margin:'20px auto'}}  />):(
+                    <Table className={classes.table} aria-label="simple table">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>Nome</TableCell>
+                          <TableCell align="center">Email</TableCell>
+                          <TableCell align="center">Tipo</TableCell>
+                          <TableCell align="center">Data de Cadastro</TableCell>
+                          <TableCell align="right">Opções</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {usuarios.map((row) => (
+                          <TableRow key={row._id}>
+                            <TableCell component="th" scope="row">
+                              {row.nome_usuario}
+                            </TableCell>
+                            <TableCell align="center">{row.email_usuario}</TableCell>
+                            <TableCell align="center"><Chip label={getNomeTipo(row.tipo_usuario)} color={getNomeTipoLabel(row.tipo_usuario)}/></TableCell>
+                            <TableCell align="center">{new Date(row.createdAt).toLocaleString('pt-br')}</TableCell>
+                            <TableCell align="right">
+                            <ButtonGroup aria-label="outlined primary button group">
+                              <Button variant="contained" color="primary" href={'/admin/usuarios/editar/'+row._id}><AutorenewIcon /> Atualizar</Button>
+                              <Button variant="contained" color="secondary" onClick={() => handleDelete(row._id)}><ClearIcon /></Button>
+                            </ButtonGroup>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>)}
+                  </TableContainer>
                 </Grid>
                 </Grid>
               </Paper>
