@@ -6,13 +6,13 @@ module.exports = {
         res.json(product);
     },
     async create(req, res){
-        const {nome_produto, descricao_produto, preco_produto, qtd_produto} = req.body;
+        const {partnumber_produto, descricao_produto, preco_produto, qtd_produto} = req.body;
 
         let data = {};
 
-        let product = await Produto.findOne({nome_produto});
+        let product = await Produto.findOne({partnumber_produto});
         if(!product){
-            data = {nome_produto,descricao_produto,preco_produto,qtd_produto};
+            data = {partnumber_produto,descricao_produto,preco_produto,qtd_produto};
             product = await Produto.create(data);
             return res.status(200).json(product);
         }else{
@@ -30,8 +30,8 @@ module.exports = {
         return res.json(product);
     },
     async update (req, res){
-        const {_id, nome_produto, descricao_produto, preco_produto, qtd_produto} = req.body;
-        const data = {nome_produto, descricao_produto,preco_produto,qtd_produto};
+        const {_id, partnumber_produto, descricao_produto, preco_produto, qtd_produto} = req.body;
+        const data = {partnumber_produto, descricao_produto,preco_produto,qtd_produto};
         const product = await Produto.findOneAndUpdate({_id},data,{new:true});
         res.json(product);
     },

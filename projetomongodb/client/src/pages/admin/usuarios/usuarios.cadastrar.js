@@ -14,15 +14,18 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Button } from '@material-ui/core';
 import api from '../../../services/api'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import SaveIcon from '@material-ui/icons/Save';
 
 const useStyles = makeStyles((theme) => ({
   root: {display: 'flex',},
   title: {flexGrow: 1,},
   appBarSpacer: theme.mixins.toolbar,
   content: {flexGrow: 1,height: '100vh',overflow: 'auto',},
-  container: {paddingTop: theme.spacing(4),paddingBottom: theme.spacing(4),},
+  container: {paddingTop: theme.spacing(2),paddingBottom: theme.spacing(4),},
   paper: {padding: 25,display: 'flex',overflow: 'auto',flexDirection: 'column',},
   formControl: {width: '100%',},
+  btnSuccess: { backgroundColor:"green", color:"#fff", "&:hover":{backgroundColor:"#12b912"}}
 }));
 
 export default function UsuarioCadastrar() {
@@ -63,6 +66,7 @@ export default function UsuarioCadastrar() {
         <Container maxWidth="lg" className={classes.container}>
         <Grid container spacing={3}>
           <Grid item sm={12}>
+          <Button style={{marginBottom:10,marginRight:5}} variant="contained" href={'/admin/usuarios'}><ArrowBackIcon/> Voltar</Button>
               <Paper className={classes.paper}>
                 <h2>Cadastro de Usuários</h2>
               <Grid container spacing={3}>
@@ -119,8 +123,8 @@ export default function UsuarioCadastrar() {
                   />
                 </Grid>
                 <Grid item xs={12} sm={12}>
-                  <Button variant="contained" onClick={handleSubmit} color="primary">
-                    Salvar
+                <Button variant="contained" onClick={handleSubmit} className={classes.btnSuccess}>
+                    <SaveIcon/> Salvar
                   </Button>
                 </Grid>
                 </Grid>

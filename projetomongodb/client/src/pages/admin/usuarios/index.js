@@ -19,6 +19,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Chip from '@material-ui/core/Chip';
 import {getNomeTipo, getNomeTipoLabel} from '../../../functions/static_data';
+import AddIcon from '@material-ui/icons/Add';
 import AutorenewIcon from '@material-ui/icons/Autorenew';
 import ClearIcon from '@material-ui/icons/Clear';
 
@@ -36,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
   },
   container: {
-    paddingTop: theme.spacing(4),
+    paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(4),
   },
   paper: {
@@ -82,12 +83,16 @@ export default function UsuariosListagem() {
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             <Grid item sm={12}>
+            <Button style={{marginBottom:10}} variant="contained" color="primary" href={'/admin/usuarios/cadastrar'}>
+              <AddIcon />
+              Cadastrar
+            </Button>
             <Paper className={classes.paper}>
                 <h2>Listagem de Usuários</h2>
               <Grid container spacing={3}>
                 <Grid item xs={12} sm={12}>
                 <TableContainer component={Paper}>
-                {loading?(<LinearProgress style={{width:'50%', margin:'20px auto'}}  />):(
+                {loading?(<LinearProgress style={{width:'50%', margin:'20px auto'}}/>):(
                     <Table className={classes.table} aria-label="simple table">
                       <TableHead>
                         <TableRow>
@@ -101,9 +106,7 @@ export default function UsuariosListagem() {
                       <TableBody>
                         {usuarios.map((row) => (
                           <TableRow key={row._id}>
-                            <TableCell component="th" scope="row">
-                              {row.nome_usuario}
-                            </TableCell>
+                            <TableCell component="th" scope="row">{row.nome_usuario}</TableCell>
                             <TableCell align="center">{row.email_usuario}</TableCell>
                             <TableCell align="center"><Chip label={getNomeTipo(row.tipo_usuario)} color={getNomeTipoLabel(row.tipo_usuario)}/></TableCell>
                             <TableCell align="center">{new Date(row.createdAt).toLocaleString('pt-br')}</TableCell>
