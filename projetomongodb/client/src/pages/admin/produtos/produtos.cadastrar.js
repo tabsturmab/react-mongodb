@@ -122,10 +122,9 @@ export default function ProdutoCadastrar() {
                 </Grid>
               </Paper>
           </Grid>
-
           </Grid>
           <Box pt={4}>
-            <Footer />
+            <Footer/>
           </Box>
         </Container>
       </main>
